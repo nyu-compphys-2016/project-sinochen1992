@@ -3,7 +3,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-
 def f(r,t):
     xJ = r[0]
     yJ = r[1]
@@ -74,6 +73,7 @@ def AdaptiveRK4(start, end, totalaccuracy, r):
             r0 = r1 + (r1-r2)/15
             t0 = t0 + 2*h
             step_count = step_count+1
+            
             tpoints.append(t0)
             xJpoints.append(r0[0])
             yJpoints.append(r0[1])
@@ -88,17 +88,9 @@ def AdaptiveRK4(start, end, totalaccuracy, r):
             JA = np.sqrt((r0[0]-r0[6])**2+(r0[1]-r0[7])**2)
             SA = np.sqrt((r0[12]-r0[6])**2+(r0[13]-r0[7])**2)
             SJ = np.sqrt((r0[0]-r0[12])**2+(r0[1]-r0[13])**2)
-            angle = np.arccos((SJ**2+SA**2-JA**2)/(2*SA*SJ))
+            angle = np.arccos((SJ**2+SA**2-JA**2)/(2*SA*SJ))-np.pi/3
             anglepoints.append(angle)
             radiuspoints.append(SA-SJ)
-      
-#            tanJ = r0[1]/r0[0]
-#            tanA = r0[7]/r0[6]
-#            tanJA = (tanJ-tanA)/(1.+tanJ*tanA)
-#            anglepoints.append(np.arctan(tanJA)-np.pi/3)
-#            radiusJA = np.sqrt(r0[6]**2+r0[7]**2)-np.sqrt(r0[0]**2+r0[1]**2)
-#            Epoints.append(0.5*(r0[3]**2+r0[4]**2+r0[5]**2)-1.0/np.sqrt(r0[0]**2+r0[1]**2+r0[2]**2))
-#            EApoints.append(0.5*(r0[9]**2+r0[10]**2+r0[11]**2)-1.0/np.sqrt(r0[6]**2+r0[7]**2+r0[8]**2)-1.0/np.sqrt((r0[6]-r0[0])**2+(r0[7]-r0[1])**2+(r0[8]-r0[2])**2)*GMJ/GM)
 
             if rho**(1/4)<2:
                 h = h * rho**(1/4)
@@ -165,41 +157,42 @@ e = 0.048498  # eccentricity
 time_unit_in_second = np.sqrt(a**3/GMS)
 Julian_year_in_second = 365.25 * 86400
 time_unit_in_years = time_unit_in_second / Julian_year_in_second
-period_in_years = 2*np.pi*time_unit_in_years*np.sqrt(GMS/(GMS+GMJ))
-t_final = 100.0 / time_unit_in_years
+period_in_years = 2*np.pi * time_unit_in_years /np.sqrt(1+q)
+t_final = 500.0 / time_unit_in_years
 
 
-
-cosalpha = np.sqrt(1+q)/2-q/np.sqrt(1+q)
-sinalpha = np.sqrt(1 - cosalpha**2)
-c = (1+e)/np.sqrt(1+q)
-vc = np.sqrt((1-e)/(1+e)/(1+q))
+c = (1.+e)*np.sqrt(1.-q/(1.+q)+(q/(1.+q))**2)
+vc = np.sqrt(1.-q/(1.+q)+(q/(1.+q))**2) * np.sqrt((1.-e)/(1.+e))
+cosalpha = -(2.*q/(1+q)-1.)/2./np.sqrt(1.-q/(1.+q)+(q/(1.+q))**2)
+sinalpha = np.sqrt(1. - cosalpha**2.)
 
 r_ini = np.array([1./(1.+q)*(1.+e), 0., 0.,  0., 1./(1.+q)*np.sqrt((1-e)/(1+e)), 0.,
                   c*cosalpha, -c*sinalpha, 0., vc*sinalpha, vc*cosalpha, 0.,
                 -q/(1.+q)*(1.+e), 0., 0., 0., -q/(1.+q)*np.sqrt((1-e)/(1+e)), 0.])
 
 
+
 # calculate exact solution
-# need to reformulate
-'''
 mean_anomaly = t_final - np.pi
 eccentric_anomaly = 0.0   # initial guess of eccentric anomaly at final time
-delta = 1.0
+delta = 1.0 # initialize delta
 accuracy = 1e-12
 while abs(delta)>accuracy:
     delta = (eccentric_anomaly - e * np.sin(eccentric_anomaly) - mean_anomaly) / (1-e*np.cos(eccentric_anomaly))
     eccentric_anomaly -= delta
+    
+'''    
 x_final_exact = -1 * np.cos(eccentric_anomaly) + e
 y_final_exact = -1 * np.sin(eccentric_anomaly) * np.sqrt(1-e**2)
 '''
+
 
 # calculation
 
 tpointsARK4, xJpointsARK4, yJpointsARK4, zJpointsARK4, \
 xApointsARK4, yApointsARK4, zApointsARK4, \
 xSpointsARK4, ySpointsARK4, zSpointsARK4, \
-anglepointsARK4, radiuspointsARK4, step_count = AdaptiveRK4(0, t_final, 10**(-6), r_ini)
+anglepointsARK4, radiuspointsARK4, step_count = AdaptiveRK4(0, t_final, 10**(-8), r_ini)
 
 
 # need to reformulate
