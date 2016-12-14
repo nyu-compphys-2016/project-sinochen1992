@@ -36,13 +36,15 @@ def f(r,t):
     azS = q*(zJ-zS)/((xJ-xS)**2+(yJ-yS)**2+(zJ-zS)**2)**(3.0/2)
     
     return np.array([vxJ,vyJ,vzJ,axJ,ayJ,azJ,vxA,vyA,vzA,axA,ayA,azA,vxS,vyS,vzS,axS,ayS,azS],float)
+
+
     
   
 def AdaptiveRK4(start, end, totalaccuracy, r):
     
     def timestep(t0,r0,h,step_count):
         if t0 + 2*h > end:
-            h = (end-t0)/2
+            h = (end-t0)/2.
         
         k1 = h*f(r0,t0)
         k2 = h*f(r0+0.5*k1,t0+0.5*h)
@@ -91,6 +93,7 @@ def AdaptiveRK4(start, end, totalaccuracy, r):
             angle = np.arccos((SJ**2+SA**2-JA**2)/(2*SA*SJ))-np.pi/3
             anglepoints.append(angle)
             radiuspoints.append(SA-SJ)
+            barycenterpoints.append((r0[0]*q+r0[12])/(1+q))
 
             if rho**(1/4)<2:
                 h = h * rho**(1/4)
@@ -119,6 +122,7 @@ def AdaptiveRK4(start, end, totalaccuracy, r):
     zSpoints = []
     anglepoints = []
     radiuspoints = []
+    barycenterpoints = []
 
     tpoints.append(t0)
     xJpoints.append(r0[0])
@@ -137,13 +141,14 @@ def AdaptiveRK4(start, end, totalaccuracy, r):
     angle = np.arccos((SJ**2+SA**2-JA**2)/(2*SA*SJ))-np.pi/3
     anglepoints.append(angle)
     radiuspoints.append(SA-SJ)
-    
+    barycenterpoints.append((r0[0]*q+r0[12])/(1+q))    
     while t0 < end:
         t0, r0, h, step_count = timestep(t0 ,r0, h, step_count)
+        
     return np.array(tpoints), np.array(xJpoints), np.array(yJpoints), np.array(zJpoints), \
     np.array(xApoints), np.array(yApoints), np.array(zApoints), \
     np.array(xSpoints), np.array(ySpoints), np.array(zSpoints), \
-    np.array(anglepoints), np.array(radiuspoints), step_count
+    np.array(anglepoints), np.array(radiuspoints), np.array(barycenterpoints),step_count,t0,
     
         
 # Astronomical Data
@@ -158,7 +163,12 @@ time_unit_in_second = np.sqrt(a**3/GMS)
 Julian_year_in_second = 365.25 * 86400
 time_unit_in_years = time_unit_in_second / Julian_year_in_second
 period_in_years = 2*np.pi * time_unit_in_years /np.sqrt(1+q)
-t_final = 500.0 / time_unit_in_years
+
+
+# initial conditions
+
+t_final_in_years = 10 * period_in_years
+t_final = t_final_in_years / time_unit_in_years
 
 
 c = (1.+e)*np.sqrt(1.-q/(1.+q)+(q/(1.+q))**2)
@@ -171,35 +181,33 @@ r_ini = np.array([1./(1.+q)*(1.+e), 0., 0.,  0., 1./(1.+q)*np.sqrt((1-e)/(1+e)),
                 -q/(1.+q)*(1.+e), 0., 0., 0., -q/(1.+q)*np.sqrt((1-e)/(1+e)), 0.])
 
 
-
-# calculate exact solution
-mean_anomaly = t_final - np.pi
-eccentric_anomaly = 0.0   # initial guess of eccentric anomaly at final time
-delta = 1.0 # initialize delta
-accuracy = 1e-12
-while abs(delta)>accuracy:
-    delta = (eccentric_anomaly - e * np.sin(eccentric_anomaly) - mean_anomaly) / (1-e*np.cos(eccentric_anomaly))
-    eccentric_anomaly -= delta
-    
-'''    
-x_final_exact = -1 * np.cos(eccentric_anomaly) + e
-y_final_exact = -1 * np.sin(eccentric_anomaly) * np.sqrt(1-e**2)
-'''
-
-
 # calculation
-
+totalaccuracy = 1E-10
 tpointsARK4, xJpointsARK4, yJpointsARK4, zJpointsARK4, \
 xApointsARK4, yApointsARK4, zApointsARK4, \
 xSpointsARK4, ySpointsARK4, zSpointsARK4, \
-anglepointsARK4, radiuspointsARK4, step_count = AdaptiveRK4(0, t_final, 10**(-8), r_ini)
+anglepointsARK4, radiuspointsARK4, barycenterpointsARK4, \
+step_count, t0 = AdaptiveRK4(0, t_final, totalaccuracy, r_ini)
 
 
-# need to reformulate
-#error_final = np.sqrt((x_final_exact - xpointsARK4[-1])**2 + (y_final_exact - ypointsARK4[-1])**2 )
+# calculate exact solution and check
+mean_anomaly = t_final*np.sqrt(1.+q) - np.pi
+eccentric_anomaly = 1.0   # initial guess of eccentric anomaly at final time
+delta = 1.0 # initialize delta
+accuracytarget = 1E-12
+while abs(delta)>accuracytarget:
+    delta = (eccentric_anomaly - e * np.sin(eccentric_anomaly) - mean_anomaly) / (1-e*np.cos(eccentric_anomaly))
+    eccentric_anomaly -= delta
+    
+TS_exact = 1-e*np.cos(eccentric_anomaly)
+TS_numerical = np.sqrt((xSpointsARK4[-1]-xJpointsARK4[-1])**2+(ySpointsARK4[-1]-yJpointsARK4[-1])**2)
+error = abs(TS_exact - TS_numerical)
 
+print('final time check',abs(t0-t_final))
+print('error in distance=',error)
 
 # plot of orbits
+print('plotting...')
 fig1 = plt.figure()
 ax1 = fig1.add_subplot(1,1,1)
 ax1.plot(xJpointsARK4, yJpointsARK4, label='Jupiter')
@@ -207,7 +215,7 @@ ax1.plot(xApointsARK4, yApointsARK4, label='Asteroid')
 ax1.plot(xSpointsARK4, ySpointsARK4, label='Sun')
 ax1.set_xlabel(r'$x/a$')
 ax1.set_ylabel(r'$y/a$')
-plt.title('orbits, Adaptive RK4, Step Count='+str(step_count))
+plt.title('orbits, time='+str(t_final_in_years)+' years, Step Count='+str(step_count))
 plt.legend(loc=0)
 plt.show()
 
@@ -221,17 +229,4 @@ plt.title('trajectory of Trojan asteroid relative to Lagrangian points L5')
 plt.legend(loc=0)
 plt.show()
 
-
-'''
-# energy plot
-fig3 = plt.figure()
-ax1 = fig3.add_subplot(1,1,1)
-ax1.plot(tpointsARK4, EpointsARK4, label='Energy of Jupiter')
-ax1.plot(tpointsARK4, EApointsARK4, label='Energy of Asteroid')
-ax1.set_xlabel(r'$t/ \sqrt{\frac{a^3}{GM}}$')
-ax1.set_ylabel(r'$E/ \frac{GMm}{a}$')
-ax1.set_ylim(-1, 0)
-plt.title('plot of energy against time')
-plt.legend(loc=0)
-plt.show()
-'''
+print('complete')
