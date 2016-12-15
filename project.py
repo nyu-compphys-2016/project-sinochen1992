@@ -75,7 +75,6 @@ def AdaptiveRK4(start, end, totalaccuracy, r):
             r0 = r1 + (r1-r2)/15
             t0 = t0 + 2*h
             step_count = step_count+1
-            
             tpoints.append(t0)
             xJpoints.append(r0[0])
             yJpoints.append(r0[1])
@@ -86,15 +85,6 @@ def AdaptiveRK4(start, end, totalaccuracy, r):
             xSpoints.append(r0[12])
             ySpoints.append(r0[13])
             zSpoints.append(r0[14])
-            
-            JA = np.sqrt((r0[0]-r0[6])**2+(r0[1]-r0[7])**2)
-            SA = np.sqrt((r0[12]-r0[6])**2+(r0[13]-r0[7])**2)
-            SJ = np.sqrt((r0[0]-r0[12])**2+(r0[1]-r0[13])**2)
-            angle = np.arccos((SJ**2+SA**2-JA**2)/(2*SA*SJ))-np.pi/3
-            anglepoints.append(angle)
-            radiuspoints.append(SA-SJ)
-            barycenterpoints.append((r0[0]*q+r0[12])/(1+q))
-
             if rho**(1/4)<2:
                 h = h * rho**(1/4)
             else:
@@ -120,9 +110,6 @@ def AdaptiveRK4(start, end, totalaccuracy, r):
     xSpoints = []
     ySpoints = []
     zSpoints = []
-    anglepoints = []
-    radiuspoints = []
-    barycenterpoints = []
 
     tpoints.append(t0)
     xJpoints.append(r0[0])
@@ -134,21 +121,14 @@ def AdaptiveRK4(start, end, totalaccuracy, r):
     xSpoints.append(r0[12])
     ySpoints.append(r0[13])
     zSpoints.append(r0[14])
-    
-    JA = np.sqrt((r0[0]-r0[6])**2+(r0[1]-r0[7])**2)
-    SA = np.sqrt((r0[12]-r0[6])**2+(r0[13]-r0[7])**2)
-    SJ = np.sqrt((r0[0]-r0[12])**2+(r0[1]-r0[13])**2)
-    angle = np.arccos((SJ**2+SA**2-JA**2)/(2*SA*SJ))-np.pi/3
-    anglepoints.append(angle)
-    radiuspoints.append(SA-SJ)
-    barycenterpoints.append((r0[0]*q+r0[12])/(1+q))    
+            
     while t0 < end:
         t0, r0, h, step_count = timestep(t0 ,r0, h, step_count)
         
     return np.array(tpoints), np.array(xJpoints), np.array(yJpoints), np.array(zJpoints), \
     np.array(xApoints), np.array(yApoints), np.array(zApoints), \
     np.array(xSpoints), np.array(ySpoints), np.array(zSpoints), \
-    np.array(anglepoints), np.array(radiuspoints), np.array(barycenterpoints),step_count,t0,
+    step_count, t0
     
         
 # Astronomical Data
@@ -167,27 +147,36 @@ period_in_years = 2*np.pi * time_unit_in_years /np.sqrt(1+q)
 
 # initial conditions
 
-t_final_in_years = 10 * period_in_years
+t_final_in_years = 20 * period_in_years
 t_final = t_final_in_years / time_unit_in_years
 
 
-c = (1.+e)*np.sqrt(1.-q/(1.+q)+(q/(1.+q))**2)
-vc = np.sqrt(1.-q/(1.+q)+(q/(1.+q))**2) * np.sqrt((1.-e)/(1.+e))
-cosalpha = -(2.*q/(1+q)-1.)/2./np.sqrt(1.-q/(1.+q)+(q/(1.+q))**2)
-sinalpha = np.sqrt(1. - cosalpha**2.)
+c = (1+e)*np.sqrt(1-q/(1.+q)+(q/(1+q))**2)
+vc = np.sqrt(1-q/(1+q)+(q/(1+q))**2) * np.sqrt((1-e)/(1+e))*1.01
+cosalpha = -(2*q/(1+q)-1)/2/np.sqrt(1-q/(1+q)+(q/(1+q))**2)*1.4
+sinalpha = np.sqrt(1 - cosalpha**2)
 
-r_ini = np.array([1./(1.+q)*(1.+e), 0., 0.,  0., 1./(1.+q)*np.sqrt((1-e)/(1+e)), 0.,
-                  c*cosalpha, -c*sinalpha, 0., vc*sinalpha, vc*cosalpha, 0.,
-                -q/(1.+q)*(1.+e), 0., 0., 0., -q/(1.+q)*np.sqrt((1-e)/(1+e)), 0.])
+r_ini = np.array([1/(1+q)*(1+e), 0., 0., 0., 1/(1+q)*np.sqrt((1-e)/(1+e)), 0.,
+                  c*cosalpha, -c*sinalpha, 0, vc*sinalpha, vc*cosalpha, 0.,
+                -q/(1+q)*(1+e), 0., 0., 0., -q/(1+q)*np.sqrt((1-e)/(1+e)), 0.])
 
+totalaccuracy = 1E-10
 
 # calculation
-totalaccuracy = 1E-10
+
 tpointsARK4, xJpointsARK4, yJpointsARK4, zJpointsARK4, \
 xApointsARK4, yApointsARK4, zApointsARK4, \
 xSpointsARK4, ySpointsARK4, zSpointsARK4, \
-anglepointsARK4, radiuspointsARK4, barycenterpointsARK4, \
 step_count, t0 = AdaptiveRK4(0, t_final, totalaccuracy, r_ini)
+
+
+# more analysis
+
+JS = np.sqrt((xJpointsARK4-xSpointsARK4)**2+(yJpointsARK4-ySpointsARK4)**2)
+AS = np.sqrt((xApointsARK4-xSpointsARK4)**2+(yApointsARK4-ySpointsARK4)**2)
+JA = np.sqrt((xJpointsARK4-xApointsARK4)**2+(yJpointsARK4-yApointsARK4)**2)
+angle = np.arccos((JS**2+AS**2-JA**2)/(2*AS*JS))
+angleminussixty = angle-np.pi/3
 
 
 # calculate exact solution and check
@@ -199,26 +188,92 @@ while abs(delta)>accuracytarget:
     delta = (eccentric_anomaly - e * np.sin(eccentric_anomaly) - mean_anomaly) / (1-e*np.cos(eccentric_anomaly))
     eccentric_anomaly -= delta
     
-TS_exact = 1-e*np.cos(eccentric_anomaly)
-TS_numerical = np.sqrt((xSpointsARK4[-1]-xJpointsARK4[-1])**2+(ySpointsARK4[-1]-yJpointsARK4[-1])**2)
-error = abs(TS_exact - TS_numerical)
+JS_exact = 1-e*np.cos(eccentric_anomaly)
+JS_error = abs(JS_exact - JS[-1])
 
 print('final time check',abs(t0-t_final))
-print('error in distance=',error)
+print('error in final JS distance=',JS_error)
+print('step count=', step_count)
+print('calculation complete, now plotting...')
 
-# plot of orbits
-print('plotting...')
+
+# plot and animation of orbits
 fig1 = plt.figure()
 ax1 = fig1.add_subplot(1,1,1)
+ax1.plot(xSpointsARK4, ySpointsARK4,label='Sun')
 ax1.plot(xJpointsARK4, yJpointsARK4, label='Jupiter')
 ax1.plot(xApointsARK4, yApointsARK4, label='Asteroid')
-ax1.plot(xSpointsARK4, ySpointsARK4, label='Sun')
 ax1.set_xlabel(r'$x/a$')
 ax1.set_ylabel(r'$y/a$')
-plt.title('orbits, time='+str(t_final_in_years)+' years, Step Count='+str(step_count))
+plt.xlim(-1.5,1.5)
+plt.ylim(-1.5,1.5)
+plt.title('orbits, total time = {0:.3g} years, Step Count = {1:.3g}'.format(t_final_in_years,step_count))
 plt.legend(loc=0)
 plt.show()
 
+'''
+totalnumberofframe = 600
+for i in range(totalnumberofframe+1):
+    t = 5*period_in_years/time_unit_in_years *i/totalnumberofframe
+    j = np.argmin(np.fabs(tpointsARK4-t))
+    fig2 = plt.figure()
+    ax1 = fig2.add_subplot(1,1,1)
+    ax1.plot(xSpointsARK4[j],ySpointsARK4[j], 'o',label='Sun')
+    ax1.plot(xJpointsARK4[j],yJpointsARK4[j], 'o',label='Jupiter')
+    ax1.plot(xApointsARK4[j],yApointsARK4[j], 'o',label='Asteroid')
+    ax1.set_xlabel(r'$x/a$')
+    ax1.set_ylabel(r'$y/a$')
+    plt.xlim(-1.5,1.5)
+    plt.ylim(-1.5,1.5)
+    plt.title('time = {0:.3g} years'.format(t*time_unit_in_years))
+    plt.legend(loc=0)    
+    plt.savefig('plot_{0:03d}.png'.format(i))
+    plt.close(fig2)
+'''
+
+# plot and animation of orbits in frame of relative positions
+
+fig3 = plt.figure()
+ax1 = fig3.add_subplot(1,1,1)
+ax1.plot(0,0, '.',label='Sun')
+ax1.plot(np.zeros(JS.shape),JS, '.',label='Jupiter')
+ax1.plot(AS*np.sin(angle), AS*np.cos(angle), '.',label='Asteroid')
+ax1.set_xlabel(r'$x/a$')
+ax1.set_ylabel(r'$y/a$')
+plt.xlim(-0.5,1.5)
+plt.ylim(-0.5,1.5)
+plt.title('orbits in special frame, total time = {0:.3g} years, Step Count = {1:.3g}'.format(t_final_in_years,step_count))
+plt.legend(loc=0)    
+plt.show()
+
+'''
+totalnumberofframe = 450
+for i in range(totalnumberofframe+1):
+    t = 20*period_in_years/time_unit_in_years *i/totalnumberofframe
+    j = np.argmin(np.fabs(tpointsARK4-t))
+    fig4 = plt.figure()
+    ax1 = fig4.add_subplot(1,1,1)
+    ax1.plot(0,0, 'o',label='Sun')
+    ax1.plot(0,JS[j], 'o',label='Jupiter')
+    ax1.plot(AS[j]*np.sin(angle[j]), AS[j]*np.cos(angle[j]), 'o',label='Asteroid')
+    ax1.set_xlabel(r'$x/a$')
+    ax1.set_ylabel(r'$y/a$')
+    plt.xlim(-0.5,1.5)
+    plt.ylim(-0.5,1.5)
+    plt.title('time = {0:.3g} years'.format(t*time_unit_in_years))
+    plt.legend(loc=0)    
+    plt.savefig('plotsp_{0:03d}.png'.format(i))
+    plt.close(fig4)
+ '''
+  
+
+
+
+
+
+
+
+'''
 # plot of trajectory of asteroid relative to Lagrangian point L5
 fig2 = plt.figure()
 ax1 = fig2.add_subplot(1,1,1)
@@ -228,5 +283,4 @@ ax1.set_ylabel(r'$radius/a$')
 plt.title('trajectory of Trojan asteroid relative to Lagrangian points L5')
 plt.legend(loc=0)
 plt.show()
-
-print('complete')
+'''
