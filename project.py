@@ -140,25 +140,26 @@ a = 778.299*10**9 # semi-major axis as unit of length
 e = 0.048498  # eccentricity
 
 time_unit_in_second = np.sqrt(a**3/GMS)
-Julian_year_in_second = 365.25 * 86400
+Julian_year_in_second = 365.25 * 86400*2
 time_unit_in_years = time_unit_in_second / Julian_year_in_second
 period_in_years = 2*np.pi * time_unit_in_years /np.sqrt(1+q)
 
 
 # initial conditions
 
-t_final_in_years = 20 * period_in_years
+t_final_in_years = 16 * period_in_years
 t_final = t_final_in_years / time_unit_in_years
 
 
 c = (1+e)*np.sqrt(1-q/(1.+q)+(q/(1+q))**2)
 vc = np.sqrt(1-q/(1+q)+(q/(1+q))**2) * np.sqrt((1-e)/(1+e))*1.01
-cosalpha = -(2*q/(1+q)-1)/2/np.sqrt(1-q/(1+q)+(q/(1+q))**2)*1.4
+cosalpha = -(2*q/(1+q)-1)/2/np.sqrt(1-q/(1+q)+(q/(1+q))**2)
 sinalpha = np.sqrt(1 - cosalpha**2)
 
-r_ini = np.array([1/(1+q)*(1+e), 0., 0., 0., 1/(1+q)*np.sqrt((1-e)/(1+e)), 0.,
-                  c*cosalpha, -c*sinalpha, 0, vc*sinalpha, vc*cosalpha, 0.,
-                -q/(1+q)*(1+e), 0., 0., 0., -q/(1+q)*np.sqrt((1-e)/(1+e)), 0.])
+r_ini = np.array([0., 1/(1+q)*(1+e), 0.,  -1/(1+q)*np.sqrt((1-e)/(1+e)), 0., 0.,
+                  c*sinalpha, c*cosalpha, 0,  -1*vc*cosalpha, vc*sinalpha, 0.,
+                 0., -q/(1+q)*(1+e), 0.,   q/(1+q)*np.sqrt((1-e)/(1+e)), 0., 0.])
+
 
 totalaccuracy = 1E-10
 
@@ -187,7 +188,6 @@ accuracytarget = 1E-12
 while abs(delta)>accuracytarget:
     delta = (eccentric_anomaly - e * np.sin(eccentric_anomaly) - mean_anomaly) / (1-e*np.cos(eccentric_anomaly))
     eccentric_anomaly -= delta
-    
 JS_exact = 1-e*np.cos(eccentric_anomaly)
 JS_error = abs(JS_exact - JS[-1])
 
@@ -205,13 +205,14 @@ ax1.plot(xJpointsARK4, yJpointsARK4, label='Jupiter')
 ax1.plot(xApointsARK4, yApointsARK4, label='Asteroid')
 ax1.set_xlabel(r'$x/a$')
 ax1.set_ylabel(r'$y/a$')
+plt.axes().set_aspect('equal')
 plt.xlim(-1.5,1.5)
 plt.ylim(-1.5,1.5)
 plt.title('orbits, total time = {0:.3g} years, Step Count = {1:.3g}'.format(t_final_in_years,step_count))
-plt.legend(loc=0)
+plt.legend(loc=1)
 plt.show()
 
-'''
+
 totalnumberofframe = 600
 for i in range(totalnumberofframe+1):
     t = 5*period_in_years/time_unit_in_years *i/totalnumberofframe
@@ -225,16 +226,59 @@ for i in range(totalnumberofframe+1):
     ax1.set_ylabel(r'$y/a$')
     plt.xlim(-1.5,1.5)
     plt.ylim(-1.5,1.5)
+    plt.axes().set_aspect('equal')
     plt.title('time = {0:.3g} years'.format(t*time_unit_in_years))
-    plt.legend(loc=0)    
+    plt.legend(loc=1)    
     plt.savefig('plot_{0:03d}.png'.format(i))
     plt.close(fig2)
-'''
 
-# plot and animation of orbits in frame of relative positions
+
+
+
+
+# plot and animation of orbits in frame of constant rotation speed
 
 fig3 = plt.figure()
 ax1 = fig3.add_subplot(1,1,1)
+ax1.plot(np.cos(tpointsARK4*np.sqrt(1+q))* xSpointsARK4 + np.sin(tpointsARK4*np.sqrt(1+q))*ySpointsARK4, -1*np.sin(tpointsARK4*np.sqrt(1+q))* xSpointsARK4 + np.cos(tpointsARK4*np.sqrt(1+q))*ySpointsARK4, '.',label='Sun')
+ax1.plot(np.cos(tpointsARK4*np.sqrt(1+q))* xJpointsARK4 + np.sin(tpointsARK4*np.sqrt(1+q))*yJpointsARK4, -1*np.sin(tpointsARK4*np.sqrt(1+q))* xJpointsARK4 + np.cos(tpointsARK4*np.sqrt(1+q))*yJpointsARK4, '.',label='Jupiter')
+ax1.plot(np.cos(tpointsARK4*np.sqrt(1+q))* xApointsARK4 + np.sin(tpointsARK4*np.sqrt(1+q))*yApointsARK4, -1*np.sin(tpointsARK4*np.sqrt(1+q))* xApointsARK4 + np.cos(tpointsARK4*np.sqrt(1+q))*yApointsARK4, '.',label='Asteroid')
+ax1.set_xlabel(r'$x/a$')
+ax1.set_ylabel(r'$y/a$')
+plt.xlim(-0.5,1.5)
+plt.ylim(-0.5,1.5)
+plt.axes().set_aspect('equal')
+plt.title('orbits in frame of constant rotation, total time = {0:.3g} years, Step Count = {1:.3g}'.format(t_final_in_years,step_count))
+plt.legend(loc=1)    
+plt.show()
+
+
+totalnumberofframe = 300
+for i in range(totalnumberofframe+1):
+    t = 16*period_in_years/time_unit_in_years *i/totalnumberofframe
+    j = np.argmin(np.fabs(tpointsARK4-t))
+    fig4 = plt.figure()
+    ax1 = fig4.add_subplot(1,1,1)
+    ax1.plot(np.cos(tpointsARK4[j]*np.sqrt(1+q))* xSpointsARK4[j] + np.sin(tpointsARK4[j]*np.sqrt(1+q))*ySpointsARK4[j], -1*np.sin(tpointsARK4[j]*np.sqrt(1+q))* xSpointsARK4[j] + np.cos(tpointsARK4[j]*np.sqrt(1+q))*ySpointsARK4[j], 'o',label='Sun')
+    ax1.plot(np.cos(tpointsARK4[j]*np.sqrt(1+q))* xJpointsARK4[j] + np.sin(tpointsARK4[j]*np.sqrt(1+q))*yJpointsARK4[j], -1*np.sin(tpointsARK4[j]*np.sqrt(1+q))* xJpointsARK4[j] + np.cos(tpointsARK4[j]*np.sqrt(1+q))*yJpointsARK4[j], 'o',label='Jupiter')
+    ax1.plot(np.cos(tpointsARK4[j]*np.sqrt(1+q))* xApointsARK4[j] + np.sin(tpointsARK4[j]*np.sqrt(1+q))*yApointsARK4[j], -1*np.sin(tpointsARK4[j]*np.sqrt(1+q))* xApointsARK4[j] + np.cos(tpointsARK4[j]*np.sqrt(1+q))*yApointsARK4[j], 'o',label='Asteroid')
+    ax1.set_xlabel(r'$x/a$')
+    ax1.set_ylabel(r'$y/a$')
+    plt.xlim(-0.5,1.5)
+    plt.ylim(-0.5,1.5)
+    plt.axes().set_aspect('equal')
+    plt.title('time = {0:.3g} years'.format(t*time_unit_in_years))
+    plt.legend(loc=1)    
+    plt.savefig('plotcr_{0:03d}.png'.format(i))
+    plt.close(fig4)
+
+ 
+  
+# plot and animation of orbits in a special frame of relative positions
+  
+
+fig5 = plt.figure()
+ax1 = fig5.add_subplot(1,1,1)
 ax1.plot(0,0, '.',label='Sun')
 ax1.plot(np.zeros(JS.shape),JS, '.',label='Jupiter')
 ax1.plot(AS*np.sin(angle), AS*np.cos(angle), '.',label='Asteroid')
@@ -242,17 +286,19 @@ ax1.set_xlabel(r'$x/a$')
 ax1.set_ylabel(r'$y/a$')
 plt.xlim(-0.5,1.5)
 plt.ylim(-0.5,1.5)
+plt.axes().set_aspect('equal')
 plt.title('orbits in special frame, total time = {0:.3g} years, Step Count = {1:.3g}'.format(t_final_in_years,step_count))
-plt.legend(loc=0)    
+plt.legend(loc=1)    
 plt.show()
 
-'''
-totalnumberofframe = 450
+
+
+totalnumberofframe = 300
 for i in range(totalnumberofframe+1):
-    t = 20*period_in_years/time_unit_in_years *i/totalnumberofframe
+    t = 16*period_in_years/time_unit_in_years *i/totalnumberofframe
     j = np.argmin(np.fabs(tpointsARK4-t))
-    fig4 = plt.figure()
-    ax1 = fig4.add_subplot(1,1,1)
+    fig6 = plt.figure()
+    ax1 = fig6.add_subplot(1,1,1)
     ax1.plot(0,0, 'o',label='Sun')
     ax1.plot(0,JS[j], 'o',label='Jupiter')
     ax1.plot(AS[j]*np.sin(angle[j]), AS[j]*np.cos(angle[j]), 'o',label='Asteroid')
@@ -260,27 +306,21 @@ for i in range(totalnumberofframe+1):
     ax1.set_ylabel(r'$y/a$')
     plt.xlim(-0.5,1.5)
     plt.ylim(-0.5,1.5)
+    plt.axes().set_aspect('equal')
     plt.title('time = {0:.3g} years'.format(t*time_unit_in_years))
-    plt.legend(loc=0)    
+    plt.legend(loc=1)    
     plt.savefig('plotsp_{0:03d}.png'.format(i))
-    plt.close(fig4)
- '''
-  
+    plt.close(fig6)
 
 
-
-
-
-
-
-'''
+ 
+ 
 # plot of trajectory of asteroid relative to Lagrangian point L5
-fig2 = plt.figure()
-ax1 = fig2.add_subplot(1,1,1)
-ax1.plot(anglepointsARK4, radiuspointsARK4, label='Step Count='+str(step_count))
-ax1.set_xlabel(r'$angle/radian$')
-ax1.set_ylabel(r'$radius/a$')
+fig7 = plt.figure()
+ax1 = fig7.add_subplot(1,1,1)
+ax1.plot(angleminussixty, AS-JS, label='Step Count='+str(step_count))
+ax1.set_xlabel(r'$angle$ /radian')
+ax1.set_ylabel(r'difference between A-S and J-S distance/$a$')
 plt.title('trajectory of Trojan asteroid relative to Lagrangian points L5')
-plt.legend(loc=0)
+plt.legend(loc=1)
 plt.show()
-'''
