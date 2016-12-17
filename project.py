@@ -164,9 +164,9 @@ period = 2. *np.pi / np.sqrt(1+q)
 
 c = (1+e)*np.sqrt(1-q/(1.+q)+(q/(1+q))**2) # distance from Sun to Lagrangian point
 vc = np.sqrt(1-q/(1+q)+(q/(1+q))**2) * np.sqrt((1-e)/(1+e)*(1+q))  # velocity of asteroid at Lagrangian point given perfect conditions
-perturbation = 1.
+perturbation = 0.98
 vcp = vc*perturbation  #perturbation to vc 
-cosalpha = -(2*q/(1+q)-1)/2/np.sqrt(1-q/(1+q)+(q/(1+q))**2) # alpha is angle of Jupiter-Barycenter-Asteroid
+cosalpha = -(q/(1+q)-1./2)/np.sqrt(1-q/(1+q)+(q/(1+q))**2) # alpha is angle of Jupiter-Barycenter-Asteroid
 sinalpha = np.sqrt(1 - cosalpha**2)
 
 r_ini = np.array([0., 1/(1+q)*(1+e), 0.,  -1/(1+q)*np.sqrt((1-e)/(1+e)*(1+q)), 0., 0.,
@@ -174,7 +174,7 @@ r_ini = np.array([0., 1/(1+q)*(1+e), 0.,  -1/(1+q)*np.sqrt((1-e)/(1+e)*(1+q)), 0
                  0., -q/(1+q)*(1+e), 0.,   q/(1+q)*np.sqrt((1-e)/(1+e)*(1+q)), 0., 0.])
 
 
-'''
+
 # calculation
 
 t_final = 100 * period
@@ -218,12 +218,12 @@ while abs(delta)>accuracytarget:
 JS_exact = 1-e*np.cos(eccentric_anomaly)
 JS_error = abs(JS_exact - JS[-1])
 
-energy_fractional_error = abs((energy[-1]-energy[0])/energy[0])
+energy_error = abs(energy[-1]-energy[0])
 
 
 print('step count=', step_count)
 print('error in final JS distance=', JS_error)
-print('fractional error in final energy=', energy_fractional_error)
+print('error in final energy=', energy_error)
 
 if JS_error <= totalaccuracy:
     print('Success!')
@@ -250,6 +250,7 @@ plt.tight_layout()
 plt.show()
 
 
+'''
 totalnumberofframe = 600
 for i in range(totalnumberofframe+1):
     t = t_final * i/totalnumberofframe
@@ -269,7 +270,7 @@ for i in range(totalnumberofframe+1):
     plt.tight_layout()    
     plt.savefig('plotst_{0:03d}.png'.format(i))
     plt.close(fig2)
-
+'''
 
 # plot and animation of orbits in frame of constant rotation speed
 
@@ -289,7 +290,7 @@ plt.tight_layout()
 plt.show()
 
 
-
+'''
 totalnumberofframe = 300
 for i in range(totalnumberofframe+1):
     t = t_final * i/totalnumberofframe
@@ -309,7 +310,7 @@ for i in range(totalnumberofframe+1):
     plt.tight_layout()
     plt.savefig('plotcr_{0:03d}.png'.format(i))
     plt.close(fig4)
-
+'''
  
   
 # plot and animation of orbits in a special frame of relative positions
@@ -329,7 +330,7 @@ plt.legend(loc=0)
 plt.tight_layout()
 plt.show()
 
-
+'''
 totalnumberofframe = 300
 for i in range(totalnumberofframe+1):
     t = t_final * i/totalnumberofframe
@@ -349,7 +350,7 @@ for i in range(totalnumberofframe+1):
     plt.tight_layout()
     plt.savefig('plotsp_{0:03d}.png'.format(i))
     plt.close(fig6)
-
+'''
 
  
  
@@ -378,17 +379,17 @@ plt.legend(loc=0)
 plt.tight_layout()
 plt.show()
 
+
+
+
 '''
-
-
-
 # convergence plot
 
 t_final = 100 * period
 step_count_list = []
 totalaccuracy_list = []
 JS_error_list = []
-energy_fractional_error_list = []
+energy_error_list = []
 
 for i in np.arange(4,9):
     totalaccuracy = 10**(-i)
@@ -419,22 +420,17 @@ for i in np.arange(4,9):
     + 0.5 * (vxSpointsARK4**2+vySpointsARK4**2+vzSpointsARK4**2)/q \
     - 1./JS
     
-    energy_fractional_error = abs((energy[-1]-energy[0])/energy[0])
+    energy_error = abs(energy[-1]-energy[0])
 
     step_count_list.append(step_count)
     totalaccuracy_list.append(totalaccuracy)
     JS_error_list.append(JS_error)
-    energy_fractional_error_list.append(energy_fractional_error)
+    energy_error_list.append(energy_error)
 
-
-step_count_list = np.array(step_count_list)
-totalaccuracy_list = np.array(totalaccuracy_list)
-JS_error_list = np.array(JS_error_list)
-energy_fractional_error_list = np.array(energy_fractional_error_list)
 
 m_ta, b_ta = np.polyfit(np.log(step_count_list), np.log(totalaccuracy_list), 1)
 m_JS, b_JS = np.polyfit(np.log(step_count_list), np.log(JS_error_list), 1)
-m_energy, b_energy = np.polyfit(np.log(step_count_list), np.log(energy_fractional_error_list), 1) 
+m_energy, b_energy = np.polyfit(np.log(step_count_list), np.log(energy_error_list), 1) 
 
 
 fig9 = plt.figure()
@@ -443,7 +439,7 @@ ax1.plot(step_count_list, totalaccuracy_list, label='target accuracy')
 ax1.plot(step_count_list, np.exp(b_ta)* step_count_list **(m_ta), label=r'fit line, slope={0:.3g}'.format(m_ta))
 ax1.plot(step_count_list, JS_error_list, label=r'error in $|\overrightarrow{JS}|$')
 ax1.plot(step_count_list, np.exp(b_JS)* step_count_list **(m_JS), label=r'fit line, slope={0:.3g}'.format(m_JS))
-ax1.plot(step_count_list, energy_fractional_error_list, label=r'fractional error in energy')
+ax1.plot(step_count_list, energy_error_list, label=r'error in total energy')
 ax1.plot(step_count_list, np.exp(b_energy)* step_count_list **(m_energy), label=r'fit line, slope={0:.3g}'.format(m_energy))
 ax1.set_xlabel(r'step count',fontsize=16)
 ax1.set_ylabel(r'$L_1$ error',fontsize=16) 
@@ -453,3 +449,4 @@ plt.title('convergence plot \n total time = {0:.3g} Jupiter years'.format(t_fina
 plt.legend(loc=0)
 plt.tight_layout()
 plt.show()
+'''
