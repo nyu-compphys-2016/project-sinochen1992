@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  17 DEC 2016 06:11
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  17 DEC 2016 07:40
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1325,7 +1325,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 \c__siunitx_mathtt_int=\count187
 
-<500px-Lagrange_very_massive.png, id=48, 501.875pt x 401.5pt>
+<500px-Lagrange_very_massive.png, id=52, 501.875pt x 401.5pt>
 File: 500px-Lagrange_very_massive.png Graphic file (type png)
 
 <use 500px-Lagrange_very_massive.png>
@@ -1333,163 +1333,169 @@ Package pdftex.def Info: 500px-Lagrange_very_massive.png used on input line 50.
 
 (pdftex.def)             Requested size: 216.81pt x 173.4503pt.
 
-<403px-L4_diagram.png, id=49, 404.51125pt x 355.3275pt>
+<403px-L4_diagram.png, id=53, 404.51125pt x 355.3275pt>
 File: 403px-L4_diagram.png Graphic file (type png)
 
 <use 403px-L4_diagram.png>
-Package pdftex.def Info: 403px-L4_diagram.png used on input line 59.
-(pdftex.def)             Requested size: 216.81pt x 190.44803pt.
+Package pdftex.def Info: 403px-L4_diagram.png used on input line 56.
+(pdftex.def)             Requested size: 180.67499pt x 158.7085pt.
  [1
 
 {/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./500px
--Lagrange_very_massive.png>]
-<600px-InnerSolarSystem-en.png, id=61, 602.25pt x 602.25pt>
+-Lagrange_very_massive.png> <./403px-L4_diagram.png>] <600px-InnerSolarSystem-e
+n.png, id=67, 602.25pt x 602.25pt>
 File: 600px-InnerSolarSystem-en.png Graphic file (type png)
 
 <use 600px-InnerSolarSystem-en.png>
-Package pdftex.def Info: 600px-InnerSolarSystem-en.png used on input line 67.
-(pdftex.def)             Requested size: 289.07999pt x 289.08589pt.
- [2 <./403px-L4_diagram.png> <./600px-InnerSolarSystem-en.png>] [3]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 137.
+Package pdftex.def Info: 600px-InnerSolarSystem-en.png used on input line 66.
+(pdftex.def)             Requested size: 252.94499pt x 252.94327pt.
+ [2 <./600px-InnerSolarSystem-en.png>]
+[3]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 135.
 
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/base/omscmr.fd
+ (/usr/local/texlive/2016/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 137.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 135.
  [4]
-<figure_6_100v_100orbits.png, id=95, 732.0951pt x 503.7219pt>
+<figure_6_100v_100orbits.png, id=103, 721.2546pt x 462.528pt>
 File: figure_6_100v_100orbits.png Graphic file (type png)
 
 <use figure_6_100v_100orbits.png>
-Package pdftex.def Info: figure_6_100v_100orbits.png used on input line 177.
-(pdftex.def)             Requested size: 433.62pt x 298.36163pt.
- [5]
-<figure_1_100v_100orbits.png, id=107, 578.16pt x 433.62pt>
+Package pdftex.def Info: figure_6_100v_100orbits.png used on input line 176.
+(pdftex.def)             Requested size: 433.62pt x 278.06943pt.
+
+<figure_1_100v_100orbits.png, id=105, 578.16pt x 433.62pt>
 File: figure_1_100v_100orbits.png Graphic file (type png)
 
 <use figure_1_100v_100orbits.png>
-Package pdftex.def Info: figure_1_100v_100orbits.png used on input line 190.
+Package pdftex.def Info: figure_1_100v_100orbits.png used on input line 189.
 (pdftex.def)             Requested size: 252.94499pt x 189.70828pt.
 
-<figure_2_100v_100orbits.png, id=108, 578.16pt x 433.62pt>
+<figure_2_100v_100orbits.png, id=106, 578.16pt x 433.62pt>
 File: figure_2_100v_100orbits.png Graphic file (type png)
 
 <use figure_2_100v_100orbits.png>
-Package pdftex.def Info: figure_2_100v_100orbits.png used on input line 191.
+Package pdftex.def Info: figure_2_100v_100orbits.png used on input line 190.
 (pdftex.def)             Requested size: 252.94499pt x 189.70828pt.
 
-<figure_3_100v_100orbits.png, id=109, 578.16pt x 433.62pt>
+<figure_3_100v_100orbits.png, id=107, 578.16pt x 433.62pt>
 File: figure_3_100v_100orbits.png Graphic file (type png)
 
 <use figure_3_100v_100orbits.png>
-Package pdftex.def Info: figure_3_100v_100orbits.png used on input line 192.
+Package pdftex.def Info: figure_3_100v_100orbits.png used on input line 191.
 (pdftex.def)             Requested size: 252.94499pt x 189.70828pt.
 
-Overfull \hbox (52.92172pt too wide) in paragraph at lines 190--193
+Overfull \hbox (52.92172pt too wide) in paragraph at lines 189--192
 [][][][] 
  []
 
-[6 <./figure_6_100v_100orbits.png>]
-<figure_5_100v_100orbits.png, id=118, 578.16pt x 433.62pt>
+[5 <./figure_6_100v_100orbits.png>]
+<figure_5_100v_100orbits.png, id=117, 578.16pt x 433.62pt>
 File: figure_5_100v_100orbits.png Graphic file (type png)
 
 <use figure_5_100v_100orbits.png>
-Package pdftex.def Info: figure_5_100v_100orbits.png used on input line 205.
+Package pdftex.def Info: figure_5_100v_100orbits.png used on input line 204.
 (pdftex.def)             Requested size: 361.34999pt x 271.01183pt.
- [7 <./figure_1_100v_100orbits.png> <./figure_2_100v_100orbits.png> <./figure_3
+ [6 <./figure_1_100v_100orbits.png> <./figure_2_100v_100orbits.png> <./figure_3
 _100v_100orbits.png>]
-<figure_2_101v_13orbits.png, id=133, 578.16pt x 433.62pt>
+<figure_2_101v_13orbits.png, id=130, 578.16pt x 433.62pt>
 File: figure_2_101v_13orbits.png Graphic file (type png)
 
 <use figure_2_101v_13orbits.png>
-Package pdftex.def Info: figure_2_101v_13orbits.png used on input line 216.
+Package pdftex.def Info: figure_2_101v_13orbits.png used on input line 215.
 (pdftex.def)             Requested size: 202.35622pt x 151.76265pt.
 
-<figure_2_101v_100orbits.png, id=134, 578.16pt x 433.62pt>
+<figure_2_101v_100orbits.png, id=131, 578.16pt x 433.62pt>
 File: figure_2_101v_100orbits.png Graphic file (type png)
 
 <use figure_2_101v_100orbits.png>
-Package pdftex.def Info: figure_2_101v_100orbits.png used on input line 217.
+Package pdftex.def Info: figure_2_101v_100orbits.png used on input line 216.
 (pdftex.def)             Requested size: 202.35622pt x 151.76265pt.
 
-<figure_2_102v_15orbits.png, id=135, 578.16pt x 433.62pt>
+<figure_2_102v_15orbits.png, id=132, 578.16pt x 433.62pt>
 File: figure_2_102v_15orbits.png Graphic file (type png)
 
 <use figure_2_102v_15orbits.png>
-Package pdftex.def Info: figure_2_102v_15orbits.png used on input line 218.
+Package pdftex.def Info: figure_2_102v_15orbits.png used on input line 217.
 (pdftex.def)             Requested size: 202.35622pt x 151.76265pt.
 
-<figure_2_102v_100orbits.png, id=136, 578.16pt x 433.62pt>
+<figure_2_102v_100orbits.png, id=133, 578.16pt x 433.62pt>
 File: figure_2_102v_100orbits.png Graphic file (type png)
 
 <use figure_2_102v_100orbits.png>
-Package pdftex.def Info: figure_2_102v_100orbits.png used on input line 219.
+Package pdftex.def Info: figure_2_102v_100orbits.png used on input line 218.
 (pdftex.def)             Requested size: 202.35622pt x 151.76265pt.
 
-<figure_2_103v_30orbits.png, id=137, 578.16pt x 433.62pt>
+<figure_2_103v_30orbits.png, id=134, 578.16pt x 433.62pt>
 File: figure_2_103v_30orbits.png Graphic file (type png)
 
 <use figure_2_103v_30orbits.png>
-Package pdftex.def Info: figure_2_103v_30orbits.png used on input line 220.
+Package pdftex.def Info: figure_2_103v_30orbits.png used on input line 219.
 (pdftex.def)             Requested size: 202.35622pt x 151.76265pt.
 
-<figure_2_103v_100orbits.png, id=138, 578.16pt x 433.62pt>
+<figure_2_103v_100orbits.png, id=135, 578.16pt x 433.62pt>
 File: figure_2_103v_100orbits.png Graphic file (type png)
 
 <use figure_2_103v_100orbits.png>
-Package pdftex.def Info: figure_2_103v_100orbits.png used on input line 221.
+Package pdftex.def Info: figure_2_103v_100orbits.png used on input line 220.
 (pdftex.def)             Requested size: 202.35622pt x 151.76265pt.
 
-<figure_2_104v_50orbits.png, id=139, 578.16pt x 433.62pt>
+<figure_2_104v_50orbits.png, id=136, 578.16pt x 433.62pt>
 File: figure_2_104v_50orbits.png Graphic file (type png)
 
 <use figure_2_104v_50orbits.png>
-Package pdftex.def Info: figure_2_104v_50orbits.png used on input line 222.
+Package pdftex.def Info: figure_2_104v_50orbits.png used on input line 221.
 (pdftex.def)             Requested size: 202.35622pt x 151.76265pt.
 
-<figure_2_104v_100orbits.png, id=140, 578.16pt x 433.62pt>
+<figure_2_104v_100orbits.png, id=137, 578.16pt x 433.62pt>
 File: figure_2_104v_100orbits.png Graphic file (type png)
 
 <use figure_2_104v_100orbits.png>
-Package pdftex.def Info: figure_2_104v_100orbits.png used on input line 223.
+Package pdftex.def Info: figure_2_104v_100orbits.png used on input line 222.
 (pdftex.def)             Requested size: 202.35622pt x 151.76265pt.
- [8 <./figure_5_100v_100orbits.png>] [9 <./figure_2_101v_13orbits.png> <./figur
+ [7 <./figure_5_100v_100orbits.png>] [8 <./figure_2_101v_13orbits.png> <./figur
 e_2_101v_100orbits.png> <./figure_2_102v_15orbits.png> <./figure_2_102v_100orbi
 ts.png> <./figure_2_103v_30orbits.png> <./figure_2_103v_100orbits.png> <./figur
 e_2_104v_50orbits.png> <./figure_2_104v_100orbits.png>] <704px-Lagrange_points2
-.png, id=170, 706.64pt x 602.25pt>
+.png, id=168, 706.64pt x 602.25pt>
 File: 704px-Lagrange_points2.png Graphic file (type png)
 
 <use 704px-Lagrange_points2.png>
-Package pdftex.def Info: 704px-Lagrange_points2.png used on input line 236.
+Package pdftex.def Info: 704px-Lagrange_points2.png used on input line 235.
 (pdftex.def)             Requested size: 361.34999pt x 307.97049pt.
 
-<figure_4_103v_30orbits.png, id=172, 578.16pt x 433.62pt>
+<figure_4_103v_30orbits.png, id=170, 578.16pt x 433.62pt>
 File: figure_4_103v_30orbits.png Graphic file (type png)
 
 <use figure_4_103v_30orbits.png>
-Package pdftex.def Info: figure_4_103v_30orbits.png used on input line 246.
+Package pdftex.def Info: figure_4_103v_30orbits.png used on input line 245.
 (pdftex.def)             Requested size: 397.48499pt x 298.11302pt.
- [10 <./704px-Lagrange_points2.png>]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 263.
- [11 <./figure_4_103v_30orbits.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 263.
- (./Simulation of Jupiter Trojan asteroids.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 263.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 263.
+ [9 <./704px-Lagrange_points2.png>]
+Overfull \hbox (10.37834pt too wide) in paragraph at lines 253--254
+\OT1/cmr/m/n/12 in GitHub repos-i-tory (url: [][]$https : / / github . com / ny
+u-[]compphys-[]2016 / project-[]sinochen1992$[][]).
+ []
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 264.
+[10 <./figure_4_103v_30orbits.png>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 264.
+
+(./Simulation of Jupiter Trojan asteroids.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 264.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 264.
 Package rerunfilecheck Info: File `"Simulation of Jupiter Trojan asteroids".out
 ' has not changed.
-(rerunfilecheck)             Checksum: 38C3F6FA7CE0BCA8ED5906D90A710E57;678.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 263.
+(rerunfilecheck)             Checksum: 2B445BFE9CF09DC7E5D0652108A369CE;722.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 264.
  ) 
 Here is how much of TeX's memory you used:
- 18409 strings out of 493014
- 347392 string characters out of 6133351
- 389469 words of memory out of 5000000
- 21691 multiletter control sequences out of 15000+600000
- 16954 words of font info for 65 fonts, out of 8000000 for 9000
+ 18411 strings out of 493014
+ 347433 string characters out of 6133351
+ 390463 words of memory out of 5000000
+ 21694 multiletter control sequences out of 15000+600000
+ 17561 words of font info for 67 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  36i,14n,49p,10411b,805s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
@@ -1499,17 +1505,16 @@ Here is how much of TeX's memory you used:
 usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></us
 r/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/
 local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/lo
-cal/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/loca
-l/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/t
-exlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/te
-xlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texl
-ive/2016/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/local/
-texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
-Output written on "Simulation of Jupiter Trojan asteroids.pdf" (11 pages, 16150
-05 bytes).
+cal/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local
+/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/
+texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/te
+xlive/2016/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/loca
+l/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
+Output written on "Simulation of Jupiter Trojan asteroids.pdf" (10 pages, 16063
+85 bytes).
 PDF statistics:
- 243 PDF objects out of 1000 (max. 8388607)
- 181 compressed objects within 2 object streams
- 59 named destinations out of 1000 (max. 500000)
- 179 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 238 PDF objects out of 1000 (max. 8388607)
+ 178 compressed objects within 2 object streams
+ 58 named destinations out of 1000 (max. 500000)
+ 187 words of extra memory for PDF output out of 10000 (max. 10000000)
 

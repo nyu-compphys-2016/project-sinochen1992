@@ -36,8 +36,8 @@
 \begin{document}
 
 
-\title{Simulation of Jupiter Trojan Asteroids \\ \large Computational Physics Final Project}
-\author{Chen Ding (cd2209)}
+\title{\textbf{Simulation of Jupiter Trojan Asteroids} \\ \large Computational Physics Final Project}
+\author{Chen Ding (cd2209) \\ \small Department of Physics, New York University} 
 \date{Dec 16, 2016}
 \maketitle
 
@@ -51,21 +51,20 @@ In astronomy, a trojan is a minor planet or moon that shares the orbit of a plan
 \caption{The trojan points are those labelled L4 and L5, highlighted in red, on the orbital path of the secondary object (blue), around the primary object (yellow).}
 \end{figure}
 
-
-In this arrangement, the massive star and the smaller planet orbit about their common barycenter. A much smaller mass located at one of the Lagrangian points is subject to a combined gravitational force that acts through this barycenter. Hence the object can orbit around the barycenter with the same orbital period as the planet, and the arrangement can remain stable over time.
-
 \begin{figure}[H]
 \centering
-\includegraphics[width=3in]{403px-L4_diagram.png}
+\includegraphics[width=2.5in]{403px-L4_diagram.png}
 \caption{Gravitational accelerations at L4 points towards barycenter}
 \end{figure}
+
+In this arrangement, the massive star and the smaller planet orbit about their common barycenter. A much smaller mass located at one of the Lagrangian points is subject to a combined gravitational force that acts through this barycenter. Hence the object can orbit around the barycenter with the same orbital period as the planet, and the arrangement can remain stable over time.
 
 The Jupiter trojans account for most known trojans in the Solar System. They are divided into the Greek camp (L4) in front of and the Trojan camp (L5) trailing behind Jupiter in their orbit. More than 6,000 have been found so far and more than a million Jupiter trojans larger than one kilometer are thought to exist, whereas only a few Mars trojans (7) and Neptune trojans (13) have been found to date. The discovery of the first Earth trojan, 2010 TK7, was announced by NASA in 2011.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=4in]{600px-InnerSolarSystem-en.png}
-\caption{The Jupiter trojans in front of and behind the planet along its orbital path, the asteroid belt between Mars and Jupiter, and the Hilda asteroids.The Jupiter trojans are divided into two groups: The Greek camp in front of and the Trojan camp trailing behind Jupiter in their orbit.}
+\includegraphics[width=3.5in]{600px-InnerSolarSystem-en.png}
+\caption{The Jupiter trojans in front of and behind the planet along its orbital path, the asteroid belt between Mars and Jupiter, and the Hilda asteroids. The Jupiter trojans are divided into two groups: The Greek camp in front of and the Trojan camp trailing behind Jupiter in their orbit.}
 \end{figure}
 
 The goal of this project is to simulate the motion of Jupiter Trojan asteroids and make comparison with theory.
@@ -82,13 +81,13 @@ Before setting up the equations of motion(EoM) for Sun(S), Jupiter(J) and Astero
 	\item the unit of time is chosen to be $\displaystyle{\sqrt{\frac{a^3}{GM_S}}}$
 \end{itemize}
 	
-Although none of gravitational constant $G$, mass of Sun $M_S$ or mass of Jupiter $M_J$ are known to great accuracy, the product $GM_S$ and $GM_J$ are known to very high accuracy from astronomical observations. However, only the ratio of masses $\displaystyle{q = \frac{GM_J}{GM_S} \approx 0.0009546}$ needs to enter the EoMs and it is dimensionless.
+Although none of gravitational constant $G$, mass of Sun $M_S$ or mass of Jupiter $M_J$ are known to great accuracy, the product $GM_S$ and $GM_J$ are known to very high accuracy from astronomical observations. However, only the ratio of masses $\displaystyle{q = \frac{GM_J}{GM_S} \approx 0.0009546}$ enters the EoMs and it is dimensionless.
 
 The eccentricity $e= 0.048498$ of orbit of Jupiter is needed when specifying initial conditions, and it is dimensionless as well.
 
 The period of Jupiter $\displaystyle{\tau = 2\pi \sqrt{\frac{a^3}{G(M_S+M_J)}}}$ becomes $\displaystyle{\tau = 2\pi \sqrt{\frac{1}{1+q}}}$ in this unit set.
 
-\subsection{Equations of Motion(EoMs)}
+\subsection{Equations of Motion}
  
 In the set of units we previously specified, the EoMs are simplified to be
 
@@ -106,8 +105,7 @@ if we choose the unit of energy as $\displaystyle{\frac{GM_{S}M_{J}}{a}}$.
 
 
 \subsection{Initial Conditions}
-It is convenient to set the barycenter to be the origin.
-Let the Jupiter starts from aphelion (furthest point in orbit),
+It is convenient to set the barycenter to be at the origin. Let Jupiter starts from aphelion (furthest point in orbit),
 \begin{align}
 	\vec{r_J} =& (0, \; \frac{1}{1+q} (1+e), \; 0) \\
 	\vec{r_S} =& (0, \; -\frac{q}{1+q} (1+e), \; 0) \\
@@ -119,13 +117,13 @@ We put the asteroid at Lagrangian point L5 (trailing behind Jupiter). The Jupite
 \[
 c = (1+e)\sqrt{1-\frac{q}{1+q}+{\left(\frac{q}{1+q}\right)}^2}.
 \]
-The speed of asteroid ( in order to have same angular velocity as Jupiter)
+The speed of asteroid (in order to have same angular velocity as Jupiter) is
 \[
 v =     \sqrt{\frac{1-e}{1+e}(1+q)}   \sqrt{1-\frac{q}{1+q}+{\left(\frac{q}{1+q}\right)}^2}.
 \]
 The angle of Jupiter-Barycenter-Asteroid
 \[
-\angle JOA  = \frac{ 2 \frac{q}{1+q}-1}{2 \sqrt{\frac{1-e}{1+e}(1+q)}} = \alpha
+\angle JOA  = \frac{ \frac{q}{1+q}-\frac{1}{2}}{\sqrt{\frac{1-e}{1+e}(1+q)}} = \alpha.
 \]
 
 Therefore,
@@ -134,41 +132,42 @@ Therefore,
 	\dot{\vec{r_A}} =& (-v \cos{\alpha},  \; v \sin{\alpha}, \; 0).
 \end{align}
 
-In order to see how asteroid moves under some deviation from perfect Lagrangian point condition, we give some perturbation to the asteroid by multiplying its speed $v$ (and hence angular velocity) by the perturbation ratio \{1, 1.01, 1.02, 1.03, ...\}.
+In order to see how asteroid moves under some deviation from Lagrangian point, we give some perturbation to the asteroid by multiplying its speed $v$ (and hence angular velocity) by the perturbation ratio\{1, 1.01, 1.02, 1.03, ...\}.
 
 \subsection{Adaptive RK4}
 
-The next step is to evolve the EoMs. Fourth-order symplectic integrator is a good choice since it conserves the energy of the system. However, the adaptive fourth-order Runge-Kutta method has its own advantages too. It allows us to choose a target for the total accuracy -- it will always reach the target, meanwhile, it has little waste. We can always use adaptive RK4 as long as we set a high accuracy target and we check if the energy drift is negligible at the end.
+The next step is to evolve the EoMs. Fourth-order symplectic integrator is a good choice since it conserves the energy of the system. However, the adaptive fourth-order Runge-Kutta method has its own advantages too. It allows us to choose a target for the total accuracy, so that the error would not be large enough to affect the results, nor would it be too small and thus waste time. Also it takes short/long time steps when variables are changing rapidly/slowly, so that it will always reach the accuracy target with little waste. We can always use adaptive RK4 as long as we set a high accuracy target and we check if the energy drift is negligible at the end.
 
 The adaptive RK4 works as follows:
+
 \begin{enumerate}
-	\item Use RK4 to evolve one time step $h$, followed by another time step $h$:
+	\item Use RK4 to evolve one time step $h$, followed by another time step $h$, and get the estimate $x_1$ for $x(t+2h)$.
 	\[ x(t+2h) = x_1 + 2ch^5 + \mathcal{O}(h^6). \]
-	Here $x$ represents any variable to be evolved. $x_1$ is the first estimate of $x(t+2h)$.
+	Here $x$ represents any variable to be evolved.
 	
 	\item Instead of making two steps of $h$, use RK4 to evolve one time step of $2h$:
 	\[ x(t+2h) = x_2 + c{(2h)}^5 + \mathcal{O}(h^6). \]
 	$x_2$ is the second estimate of $x(t+2h)$.
 	
 	\item Therefore, each time step $h$ will introduce an error of 
-	\[ \epsilon_x = ch^5 = \frac{1}{30}(x_1-x_2) \]
+	\[ \epsilon_x = ch^5  = \frac{1}{30}(x_1-x_2) + \mathcal{O}(h^6). \]
 	
 	\item The target accuracy for a single time step $h$ is $h \delta$, where,
 	\[ \delta = \frac{\textrm{total accuracy target}}{\textrm{total time}}. \]
+	
 	Compare the error $\epsilon_x$ with target accuracy $h \delta$:
 	\[ \rho = \frac{h \delta}{\epsilon_x}.  \]
 	
-	\item If $\rho<1$, we decline the time evolution as it introduces an error larger than accuracy target, and we start it all over again with reduced time step 
+	If $\rho<1$, we decline the time evolution as it introduces an error larger than accuracy target, and we start from $x(t)$ again with reduced time step 
 	\[ h' = h {\rho}^{1/4}. \]
-	If $\rho>1$, the error is smaller than accuracy target, we accept the time evolution and make $x(t+2h) = x_1$. Also, in the next evolution, we can try a larger time step $h'$ in the hope of going faster. Moreover, in case that $x_1$ and $x_2$ coincide by chance, we limit $h'<2h$.
+	If $\rho>1$, the error is smaller than accuracy target, we accept the time evolution and make $x(t+2h) = x_1$. Also, in the next evolution, we can try a larger time step $h'$ in the hope of going faster. Moreover, in case that $x_1$ and $x_2$ coincide by chance, we limit $h' \leqslant 2h$.
 	
 	\item It can be realized that
 	\[ x(t+2h) = x_1 + 2ch^5 + \mathcal{O}(h^6) = x_1 + \frac{1}{15}(x_1-x_2) + \mathcal{O}(h^6). \]
-	If we accept $x_1 + \frac{1}{15}(x_1-x_2)$ instead of $x_1$, the error would be $\mathcal{O}(h^6)$ and the algorithm is accurate to fifth-order instead of fourth order.
+	If we accept $x_1 + \frac{1}{15}(x_1-x_2)$ instead of $x_1$, the error would be $\mathcal{O}(h^6)$ and the algorithm is accurate to fifth-order instead of fourth order!
 	
 \end{enumerate}
 
-	
 	
 As mentioned earlier, we need to check if the change in total energy is within allowance. Also, we can compare $|\overrightarrow{JS}|$ with the exact value   by solving $M = \psi - e \sin{\psi} $ using Newton-Raphson method, where $M$ is mean anomaly, $\psi$ is eccentric anomaly and $e$ is eccentricity as before.
 
@@ -191,13 +190,13 @@ We can see from Figure \ref{fig:convergence} that both the error in $|\overright
 \subfloat[constant rotation frame]{\includegraphics[width = 3.5in]{figure_2_100v_100orbits.png}}
 \subfloat[special frame]{\includegraphics[width = 3.5in]{figure_3_100v_100orbits.png}}
 \caption{Orbits of Sun, Jupiter and Trojan asteroid in three different reference frames, in 100 Jupiter years, with perfect Lagrangian point initial condition.}  
-\label{fig: figure123_100v_100orbits}
+\label{fig:figure123_100v_100orbits}
 \end{figure}
 
 
-Figure \ref{fig: figure123_100v_100orbits}(b) shows the orbits in a rotating frame of constant angular frequency that is equal to the average angular frequency of Jupiter. The shape of orbits in this frame is due to the eccentricity of Jupiter orbit. Jupiter is traveling in angular frequency less than average at aphelion, and greater than average at perihelion.
+Figure \ref{fig:figure123_100v_100orbits}(b) shows the orbits in a rotating frame of constant angular frequency that is equal to the average angular frequency of Jupiter. The shape of orbits in this frame is due to the eccentricity of Jupiter orbit. Jupiter is traveling in angular frequency less than average at aphelion, and greater than average at perihelion.
 
-Figure \ref{fig: figure123_100v_100orbits}(c) shows the orbits in a special frame, in which the Sun is fixed at origin, and the Jupiter is fixed in direction. The angular frequency of this rotating frame is varying, giving Euler force in addition to Coriolis force and centrifugal force. However, it has the advantage of showing $\angle JSA$.
+Figure \ref{fig:figure123_100v_100orbits}(c) shows the orbits in a special frame, in which the Sun is fixed at origin, and the Jupiter is fixed in direction. The angular frequency of this rotating frame is varying, giving Euler force in addition to Coriolis force and centrifugal force. However, it has the advantage of showing $\angle JSA$.
 
 
 \begin{figure}[H]
@@ -208,7 +207,7 @@ Figure \ref{fig: figure123_100v_100orbits}(c) shows the orbits in a special fram
 \end{figure}
 
 
-From Figure \ref{fig: figure5_100v_100orbits} we can see that, in 100 Jupiter years, the asteroid always make an equilateral triangle with Jupiter and Sun (with extremely small computation error). We can deduce that, if an asteroid is given perfect Lagrangian point condition, it will stay at Lagrangian point forever.
+From Figure \ref{fig: figure5_100v_100orbits} we can deduce that, in 100 Jupiter years, the asteroid always make an equilateral triangle with Jupiter and Sun (with extremely small computation error). If an asteroid is given perfect Lagrangian point condition, it will stay at Lagrangian point forever.
 
 \subsection{Including perturbation}
 
@@ -222,19 +221,19 @@ From Figure \ref{fig: figure5_100v_100orbits} we can see that, in 100 Jupiter ye
 \subfloat{\includegraphics[width = 2.8in]{figure_2_104v_50orbits.png}} 
 \subfloat{\includegraphics[width = 2.8in]{figure_2_104v_100orbits.png}}
 
-\caption{Orbits of Sun, Jupiter and Trojan asteroid in stationary and constant rotation frames, with different strength of perturbation to perfect Lagrange point initial condition.}
+\caption{Orbits of Sun, Jupiter and Trojan asteroid in stationary and constant rotation frames, with different strength of perturbation to Lagrange point initial conditions.}
 \label{fig:bigchart}
 \end{figure}
 
-Looking Figure \ref{fig:bigchart} top to bottom, we can see that, with increasing perturbation ratio to initial velocity (and hence angular velocity), the shape of orbit of asteroid changes from being kidney-bean shaped (perturbation ratio = 1.01 and 1.02) to horse-shoe shaped (ratio = 1.03) and eventually escape from Lagrangian point (ratio = 1.04).
+Looking at Figure \ref{fig:bigchart} from top to bottom, we can see that, with increasing perturbation ratio to initial velocity (and hence angular velocity), the shape of orbit of asteroid changes from being kidney-bean shaped (perturbation ratio = 1.01 and 1.02) to horse-shoe shaped (ratio = 1.03) and eventually the asteroid escapes from Lagrangian point (ratio = 1.04).
 
-Looking Figure \ref{fig:bigchart} left to right, we can see that, the orbit of asteroid does not repeat itself after each cycle. Over long time the trajectory can cover the entire space within the kidney-bean or horse-shoe shape.
+Looking at Figure \ref{fig:bigchart} from left to right, we can see that, the orbit of asteroid does not repeat itself after each cycle. Over long time the trajectory can cover the entire space within the kidney-bean or horse-shoe shape.
 
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=5in]{704px-Lagrange_points2.png}
-\caption{A contour plot of the effective potential due to gravity and the centrifugal force of a two-body system in a rotating frame of reference. The arrows indicate the gradients of the potential around the five Lagrange points-downhill toward them (red) or away from them (blue). Counterintuitively, the L4 and L5 points are the high points of the potential. At the points themselves gravity and centrifugal forces are balanced by Coriolis force.}
+\caption{A contour plot of the effective potential due to gravity and the centrifugal force of a two-body system in a rotating frame of reference. The arrows indicate the gradients of the potential around the five Lagrange points-downhill toward them (red) or away from them (blue). Counterintuitively, the L4 and L5 points are the high points of the potential. At these points themselves gravity and centrifugal forces are balanced by Coriolis force.}
 \label{fig:potential}
 \end{figure}
 
@@ -248,16 +247,18 @@ In the rotating frame of constant angular frequency, the asteroid will experienc
 \label{fig:figure_4_103v_30orbits}
 \end{figure}
 
-Examining \ref{fig:figure_4_103v_30orbits} closely, we can see that, when $|\overrightarrow{AS}| > |\overrightarrow{JS}|$ the asteroid moves in clockwise direction, and when $|\overrightarrow{AS}| < |\overrightarrow{JS}|$ the asteroid moves in counter-clockwise direction, so that the Coriolis force will balance the difference between gravity and centrifugal force, and keep the asteroid in stable orbit.
-
+Examining Figure \ref{fig:figure_4_103v_30orbits} closely we can see that, when $|\overrightarrow{AS}| > |\overrightarrow{JS}|$ (centrifugal force greater than gravity), the fact that asteroid moving in clockwise direction induces a inward Coriolis force to balance the difference. When $|\overrightarrow{AS}| < |\overrightarrow{JS}|$ (centrifugal force smaller than gravity), the asteroid moves in counter-clockwise direction so that the Coriolis force balances the difference and keeps the asteroid in stable orbit.
 
 \section{Animation}
-This project report includes animation of motion of Sun, Jupiter and Trojan asteroid, in all three frames of reference, with different perturbation ratios, which are uploaded to GitHub repository (url: \url{https://github.com/nyu-compphys-2016/project-sinochen1992}).  The repository also includes orbits plots that are not included in 'Results and Discussion' section.
+This project report includes animations of motions of Sun, Jupiter and Trojan asteroid, in three frames of reference and with different perturbation ratios. Animations are available in GitHub repository (url: \url{https://github.com/nyu-compphys-2016/project-sinochen1992}).  The repository also includes orbit plots that are not included in 'Results and Discussion' section.
 
+\section{Acknowledgements}
+Many thanks to teaching assistant Geoffrey Ryan for the helpful discussion on this project and for the numerous support throughout the semester. Without whom I would not have learnt computational physics quickly nor would I get interested in computational physics.
 
 \section{References}
 \begin{itemize}
-\item Wikipedia 
+\item Wikipedia
+\item 'Computational Physics' textbook by Mark Newman 
 \end{itemize}
 
 \end{document}

@@ -164,7 +164,7 @@ period = 2. *np.pi / np.sqrt(1+q)
 
 c = (1+e)*np.sqrt(1-q/(1.+q)+(q/(1+q))**2) # distance from Sun to Lagrangian point
 vc = np.sqrt(1-q/(1+q)+(q/(1+q))**2) * np.sqrt((1-e)/(1+e)*(1+q))  # velocity of asteroid at Lagrangian point given perfect conditions
-perturbation = 0.98
+perturbation = 1.03
 vcp = vc*perturbation  #perturbation to vc 
 cosalpha = -(q/(1+q)-1./2)/np.sqrt(1-q/(1+q)+(q/(1+q))**2) # alpha is angle of Jupiter-Barycenter-Asteroid
 sinalpha = np.sqrt(1 - cosalpha**2)
@@ -177,7 +177,7 @@ r_ini = np.array([0., 1/(1+q)*(1+e), 0.,  -1/(1+q)*np.sqrt((1-e)/(1+e)*(1+q)), 0
 
 # calculation
 
-t_final = 100 * period
+t_final = 30 * period
 totalaccuracy = 1E-8
 
 tpointsARK4, \
@@ -250,7 +250,7 @@ plt.tight_layout()
 plt.show()
 
 
-'''
+
 totalnumberofframe = 600
 for i in range(totalnumberofframe+1):
     t = t_final * i/totalnumberofframe
@@ -270,7 +270,7 @@ for i in range(totalnumberofframe+1):
     plt.tight_layout()    
     plt.savefig('plotst_{0:03d}.png'.format(i))
     plt.close(fig2)
-'''
+
 
 # plot and animation of orbits in frame of constant rotation speed
 
@@ -290,7 +290,7 @@ plt.tight_layout()
 plt.show()
 
 
-'''
+
 totalnumberofframe = 300
 for i in range(totalnumberofframe+1):
     t = t_final * i/totalnumberofframe
@@ -310,7 +310,7 @@ for i in range(totalnumberofframe+1):
     plt.tight_layout()
     plt.savefig('plotcr_{0:03d}.png'.format(i))
     plt.close(fig4)
-'''
+
  
   
 # plot and animation of orbits in a special frame of relative positions
@@ -330,7 +330,7 @@ plt.legend(loc=0)
 plt.tight_layout()
 plt.show()
 
-'''
+
 totalnumberofframe = 300
 for i in range(totalnumberofframe+1):
     t = t_final * i/totalnumberofframe
@@ -350,7 +350,7 @@ for i in range(totalnumberofframe+1):
     plt.tight_layout()
     plt.savefig('plotsp_{0:03d}.png'.format(i))
     plt.close(fig6)
-'''
+
 
  
  
@@ -382,7 +382,7 @@ plt.show()
 
 
 
-'''
+
 # convergence plot
 
 t_final = 100 * period
@@ -449,4 +449,3 @@ plt.title('convergence plot \n total time = {0:.3g} Jupiter years'.format(t_fina
 plt.legend(loc=0)
 plt.tight_layout()
 plt.show()
-'''
